@@ -1,4 +1,4 @@
-package edu.eci.IETI.project;
+package edu.eci.IETI.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
