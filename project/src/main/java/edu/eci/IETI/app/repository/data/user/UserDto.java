@@ -1,5 +1,7 @@
 package edu.eci.IETI.app.repository.data.user;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import lombok.Data;
 
 @Data
@@ -22,7 +24,7 @@ public class UserDto {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
-        this.password = password;
+        this.password = new BCryptPasswordEncoder().encode(password);
         this.id = "";
     }
 

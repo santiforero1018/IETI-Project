@@ -3,6 +3,8 @@ package edu.eci.IETI.app.repository.data.user;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,30 +17,32 @@ public class UserRep {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    private String id;
-    private final Date createdAt;
+    private Long id;
+    private Date createdAt;
     private String name;
     private String lastName;
     private String email;
     private String password;
     private List<UserRoles> roles;
 
-    public UserRep(String id, String name, String lastName, String email, String password) {
-        this.id = id;
+    public UserRep(){
+
+    }
+
+    public UserRep(String name, String lastName, String email, String password) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.createdAt = new Date();
-        this.password = password;
+        this.password = new BCryptPasswordEncoder().encode(password);
     }
 
     public UserRep(UserDto userDto) {
-        this.id = userDto.getId();
         this.name = userDto.getName();
         this.lastName = userDto.getLastName();
         this.email = userDto.getEmail();
         this.createdAt = new Date();
-        this.password = userDto.getPassword();
+        this.password = new BCryptPasswordEncoder().encode(userDto.getPassword());
     }
 
     public void update(UserDto userDto) {

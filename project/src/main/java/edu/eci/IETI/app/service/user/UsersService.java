@@ -8,13 +8,13 @@ import edu.eci.IETI.app.repository.data.user.UserRep;
 public interface UsersService {
     UserRep save(UserRep user);
 
-    Optional<UserRep> findById(String id);
+    Optional<UserRep> findById(Long id);
 
     Optional<UserRep> findByEmail(String email);
 
     List<UserRep> all();
 
-    void deleteById(String id);
+    void deleteByEmail(String email);
 
-    UserRep update(UserRep user, String userId);
+    UserRep update(UserRep user);
 }

@@ -21,7 +21,7 @@ public class UsersServiceMap implements UsersService{
     }
 
     @Override
-    public Optional<UserRep> findById(String id) {
+    public Optional<UserRep> findById(Long id) {
         return this.userRepository.findById(id);
     }
 
@@ -36,13 +36,13 @@ public class UsersServiceMap implements UsersService{
     }
 
     @Override
-    public void deleteById(String id) {
-        this.userRepository.deleteById(id);;
+    public void deleteByEmail(String Email) {
+        this.userRepository.deleteByEmail(Email);
     }
 
     @Override
-    public UserRep update(UserRep user, String userId) {
-        if(this.userRepository.existsById(userId)) return this.userRepository.save(user);
+    public UserRep update(UserRep user) {
+        if(this.userRepository.existsById(user.getId())) return this.userRepository.save(user);
         return null;
     }
 }
