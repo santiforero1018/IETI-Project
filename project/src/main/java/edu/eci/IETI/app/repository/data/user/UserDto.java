@@ -1,37 +1,34 @@
 package edu.eci.IETI.app.repository.data.user;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import java.util.List;
+
 import lombok.Data;
 
 @Data
 public class UserDto {
-    private final String name;
-    private final String lastName;
+    private final String username;
     private final String email;
     private final String password;
-    private final String id;
+    private List<UserRoles> roles;
 
     public UserDto() {
-        this.name = "";
-        this.lastName = "";
+        this.username = "";
         this.email = "";
         this.password = "";
-        this.id = "";
     }
 
-    public UserDto(String name, String lastName, String email, String password, String id) {
-        this.name = name;
-        this.lastName = lastName;
+    public UserDto(String username, String email, String password) {
+        this.username = username;
         this.email = email;
-        this.password = password;
-        this.id = "";
+        this.password = new BCryptPasswordEncoder().encode(password);
     }
 
-    public UserDto(String name, String lastName, String email, String id) {
-        this.name = name;
-        this.lastName = lastName;
+    public UserDto(String username, String email, String password, List<UserRoles> roles) {
+        this.username = username;
         this.email = email;
-        this.password = "";
-        this.id = "";
+        this.password = new BCryptPasswordEncoder().encode(password);
+        this.roles = roles;
     }
 
 }

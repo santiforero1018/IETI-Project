@@ -14,8 +14,10 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import static edu.eci.IETI.app.utils.Constans.ADMIN_ROLE;
+
 @RestController
-@RequestMapping("/v1/users/")
+@RequestMapping("/v1/users")
 public class UsersController {
     private final UsersService usersService;
 
@@ -32,6 +34,7 @@ public class UsersController {
         return ResponseEntity.created(createdUserUri).body(user);
     }
 
+    @RolesAllowed(ADMIN_ROLE)
     @GetMapping
     public ResponseEntity<List<UserRep>> getAllUsers() {
         List<UserRep> data = usersService.all();
@@ -57,7 +60,7 @@ public class UsersController {
             UserRep newUser = usersService.save(oldUser);
             return ResponseEntity.ok(newUser);
         } else {
-            throw new UserNotFoundException(id);
+            throw new UserNotFoundException(username);
         }
     }
 
@@ -68,7 +71,7 @@ public class UsersController {
             usersService.deleteById(id);
             return ResponseEntity.ok().build();
         } else {
-            throw new UserNotFoundException(id);
+            throw new UserNotFoundException(username);
         }
     }
 }
