@@ -21,8 +21,8 @@ public class UsersServiceMap implements UsersService{
     }
 
     @Override
-    public Optional<UserRep> findById(Long id) {
-        return this.userRepository.findById(id);
+    public Optional<UserRep> findByUserName(String username) {
+        return this.userRepository.findByUsername(username);
     }
 
     @Override
@@ -36,8 +36,8 @@ public class UsersServiceMap implements UsersService{
     }
 
     @Override
-    public void deleteByEmail(String Email) {
-        this.userRepository.deleteByEmail(Email);
+    public void deleteByUsername(String username) {
+        this.userRepository.deleteByUsername(username);
     }
 
     @Override

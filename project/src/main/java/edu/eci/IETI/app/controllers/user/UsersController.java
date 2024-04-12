@@ -14,6 +14,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import static edu.eci.IETI.app.utils.Constans.ADMIN_ROLE;
+
 @RestController
 @RequestMapping("/v1/users")
 public class UsersController {
@@ -31,43 +33,42 @@ public class UsersController {
         return ResponseEntity.created(createdUserUri).body(user);
     }
 
+    @RolesAllowed(ADMIN_ROLE)
     @GetMapping
     public ResponseEntity<List<UserRep>> getAllUsers() {
         List<UserRep> data = usersService.all();
         return ResponseEntity.ok(data);
     }
 
-    @GetMapping("/{email}")
-    public ResponseEntity<UserRep> findById(@PathVariable("email") String email) {
-        Optional<UserRep> user = usersService.findByEmail(email);
-        if(!user.isEmpty()) {
-            return ResponseEntity.ok(user.get());
-        } else {
-            throw new UserNotFoundException();
-        }
+    @GetMapping("/{username}")
+    public ResponseEntity<UserRep> getUser(@PathVariable("username") String username) {
+        UserRep user = usersService.findByUserName(username).orElseThrow(() -> new UserNotFoundException(username));
+        return ResponseEntity.ok(user);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UserRep> updateUser(@PathVariable("id") Long id, @RequestBody UserDto newInfo) {
-        Optional<UserRep> user = usersService.findById(id);
+    @RolesAllowed(ADMIN_ROLE)
+    @PutMapping("/{username}")
+    public ResponseEntity<UserRep> updateUser(@PathVariable("username") String username, @RequestBody UserDto newInfo) {
+        Optional<UserRep> user = usersService.findByUserName(username);
         if(!user.isEmpty()) {
             UserRep oldUser = user.get();
             oldUser.update(newInfo);
             UserRep newUser = usersService.save(oldUser);
             return ResponseEntity.ok(newUser);
         } else {
-            throw new UserNotFoundException();
+            throw new UserNotFoundException(username);
         }
     }
 
-    @DeleteMapping("/{email}")
-    public ResponseEntity<Void> deleteUser(@PathVariable("email") String email) {
-        Optional<UserRep> user = usersService.findByEmail(email);
+    @RolesAllowed(ADMIN_ROLE)
+    @DeleteMapping("/{username}")
+    public ResponseEntity<Void> deleteUser(@PathVariable("username") String username) {
+        Optional<UserRep> user = usersService.findByEmail(username);
         if(!user.isEmpty()) {
-            usersService.deleteByEmail(email);
+            usersService.deleteByUsername(username);
             return ResponseEntity.ok().build();
         } else {
-            throw new UserNotFoundException();
+            throw new UserNotFoundException(username);
         }
     }
 }
