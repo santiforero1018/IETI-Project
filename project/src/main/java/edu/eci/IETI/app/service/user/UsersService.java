@@ -1,18 +1,20 @@
 package edu.eci.IETI.app.service.user;
 
-import edu.eci.IETI.app.repository.user.User;
-
 import java.util.List;
 import java.util.Optional;
 
+import edu.eci.IETI.app.repository.data.user.UserRep;
+
 public interface UsersService {
-    User save(User user);
+    UserRep save(UserRep user);
 
-    Optional<User> findById(String id);
+    Optional<UserRep> findById(String id);
 
-    List<User> all();
+    Optional<UserRep> findByEmail(String email);
+
+    List<UserRep> all();
 
     void deleteById(String id);
 
-    User update(User user, String userId);
+    UserRep update(UserRep user, String userId);
 }

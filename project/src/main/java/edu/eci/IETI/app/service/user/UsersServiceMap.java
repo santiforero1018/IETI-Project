@@ -1,37 +1,48 @@
 package edu.eci.IETI.app.service.user;
-import edu.eci.IETI.app.repository.user.User;
 import org.springframework.stereotype.Service;
-import java.util.HashMap;
+import org.springframework.beans.factory.annotation.Autowired;
+import edu.eci.IETI.app.repository.data.user.UserRep;
+import edu.eci.IETI.app.repository.data.user.UserRepository;
+
+// import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UsersServiceMap implements UsersService{
-    HashMap<String, User> users = new HashMap<String, User>();
+    // HashMap<String, User> users = new HashMap<String, User>();
+    @Autowired
+    private UserRepository userRepository;
+
+
     @Override
-    public User save(User user) {
-        users.put(user.getId(), user);
-        return user;
+    public UserRep save(UserRep user) {
+        return this.userRepository.save(user);
     }
 
     @Override
-    public Optional<User> findById(String id) {
-        return Optional.ofNullable(users.get(id));
+    public Optional<UserRep> findById(String id) {
+        return this.userRepository.findById(id);
     }
 
     @Override
-    public List<User> all() {
-        return (List<User>) users.values();
+    public Optional<UserRep> findByEmail(String email){
+        return this.userRepository.findByEmail(email);
+    }
+
+    @Override
+    public List<UserRep> all() {
+        return (List<UserRep>) this.userRepository.findAll();
     }
 
     @Override
     public void deleteById(String id) {
-        users.remove(id);
+        this.userRepository.deleteById(id);;
     }
 
     @Override
-    public User update(User user, String userId) {
-        users.put(userId, user);
-        return user;
+    public UserRep update(UserRep user, String userId) {
+        if(this.userRepository.existsById(userId)) return this.userRepository.save(user);
+        return null;
     }
 }

@@ -1,5 +1,8 @@
-package edu.eci.IETI.app.repository.user;
+package edu.eci.IETI.app.repository.data.user;
 
+import lombok.Data;
+
+@Data
 public class UserDto {
     private final String name;
     private final String lastName;
@@ -29,25 +32,6 @@ public class UserDto {
         this.email = email;
         this.password = "";
         this.id = "";
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-    public String getId() {
-        return id;
     }
 
 }

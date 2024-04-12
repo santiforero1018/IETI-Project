@@ -1,9 +1,11 @@
-package edu.eci.IETI.app.controller.user;
+package edu.eci.IETI.app.controllers.user;
 
 import edu.eci.IETI.app.exception.UserNotFoundException;
-import edu.eci.IETI.app.repository.user.User;
-import edu.eci.IETI.app.repository.user.UserDto;
+import edu.eci.IETI.app.repository.data.user.UserRep;
+import edu.eci.IETI.app.repository.data.user.UserDto;
 import edu.eci.IETI.app.service.user.UsersService;
+import jakarta.annotation.security.RolesAllowed;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,23 +23,24 @@ public class UsersController {
         this.usersService = usersService;
     }
 
+    @RolesAllowed("ADMIN")
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody UserDto userInfo) {
+    public ResponseEntity<UserRep> createUser(@RequestBody UserDto userInfo) {
         URI createdUserUri = URI.create("");
-        User user = new User(userInfo);
+        UserRep user = new UserRep(userInfo);
         usersService.save(user);
         return ResponseEntity.created(createdUserUri).body(user);
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> data = usersService.all();
+    public ResponseEntity<List<UserRep>> getAllUsers() {
+        List<UserRep> data = usersService.all();
         return ResponseEntity.ok(data);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<User> findById(@PathVariable("id") String id) {
-        Optional<User> user = usersService.findById(id);
+    public ResponseEntity<UserRep> findById(@PathVariable("id") String id) {
+        Optional<UserRep> user = usersService.findById(id);
         if(!user.isEmpty()) {
             return ResponseEntity.ok(user.get());
         } else {
@@ -46,12 +49,12 @@ public class UsersController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<User> updateUser(@PathVariable("id") String id, @RequestBody UserDto newInfo) {
-        Optional<User> user = usersService.findById(id);
+    public ResponseEntity<UserRep> updateUser(@PathVariable("id") String id, @RequestBody UserDto newInfo) {
+        Optional<UserRep> user = usersService.findById(id);
         if(!user.isEmpty()) {
-            User oldUser = user.get();
+            UserRep oldUser = user.get();
             oldUser.update(newInfo);
-            User newUser = usersService.save(oldUser);
+            UserRep newUser = usersService.save(oldUser);
             return ResponseEntity.ok(newUser);
         } else {
             throw new UserNotFoundException(id);
@@ -60,7 +63,7 @@ public class UsersController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") String id) {
-        Optional<User> user = usersService.findById(id);
+        Optional<UserRep> user = usersService.findById(id);
         if(!user.isEmpty()) {
             usersService.deleteById(id);
             return ResponseEntity.ok().build();

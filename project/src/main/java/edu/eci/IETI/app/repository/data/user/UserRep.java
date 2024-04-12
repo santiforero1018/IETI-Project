@@ -1,17 +1,29 @@
-package edu.eci.IETI.app.repository.user;
+package edu.eci.IETI.app.repository.data.user;
 
 import java.util.Date;
+import java.util.List;
 
-public class User {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.Data;
 
-    private final String id;
+@Entity(name = "users")
+@Data
+public class UserRep {
+
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    private String id;
     private final Date createdAt;
     private String name;
     private String lastName;
     private String email;
     private String password;
+    private List<UserRoles> roles;
 
-    public User(String id, String name, String lastName, String email, String password) {
+    public UserRep(String id, String name, String lastName, String email, String password) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -20,7 +32,7 @@ public class User {
         this.password = password;
     }
 
-    public User(UserDto userDto) {
+    public UserRep(UserDto userDto) {
         this.id = userDto.getId();
         this.name = userDto.getName();
         this.lastName = userDto.getLastName();
@@ -29,46 +41,18 @@ public class User {
         this.password = userDto.getPassword();
     }
 
-
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-
     public void update(UserDto userDto) {
         this.name = userDto.getName();
         this.lastName = userDto.getLastName();
         this.email = userDto.getEmail();
         if (!userDto.getPassword().isEmpty()) {
             this.password = userDto.getPassword();
+        }
+    }
+
+    public void addRole(UserRoles role){
+        if(!roles.contains(role)){
+            roles.add(role);
         }
     }
 }
