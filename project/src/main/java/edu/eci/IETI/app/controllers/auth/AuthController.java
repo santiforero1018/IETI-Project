@@ -16,7 +16,7 @@ import edu.eci.IETI.app.service.user.UsersService;
 @RestController
 @RequestMapping("/v1/auth")
 public class AuthController {
-    
+
     @Autowired
     private UsersService usersService;
 
@@ -27,9 +27,10 @@ public class AuthController {
     }
 
     @PostMapping
-    public ResponseEntity<TokenDto> login(@RequestBody LoginDto loginDto) throws InvalidCredentialException{
-        UserRep user = usersService.findByEmail(loginDto.getEmail()).orElseThrow(() -> new InvalidCredentialException());
-        if(BCrypt.checkpw(loginDto.getPassword(), user.getPassword())){
+    public ResponseEntity<TokenDto> login(@RequestBody LoginDto loginDto) throws InvalidCredentialException {
+        UserRep user = usersService.findByEmail(loginDto.getEmail())
+                .orElseThrow(() -> new InvalidCredentialException());
+        if (BCrypt.checkpw(loginDto.getPassword(), user.getPassword())) {
             return ResponseEntity.ok(jwtUtil.generateToken(user.getEmail(), user.getRoles()));
         } else {
             throw new InvalidCredentialException();

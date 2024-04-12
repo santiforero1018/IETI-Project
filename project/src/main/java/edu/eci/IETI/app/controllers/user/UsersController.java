@@ -23,7 +23,7 @@ public class UsersController {
         this.usersService = usersService;
     }
 
-    @RolesAllowed("ADMIN")
+    // @RolesAllowed("ADMIN")
     @PostMapping
     public ResponseEntity<UserRep> createUser(@RequestBody UserDto userInfo) {
         URI createdUserUri = URI.create("");
@@ -41,7 +41,7 @@ public class UsersController {
     @GetMapping("{id}")
     public ResponseEntity<UserRep> findById(@PathVariable("id") String id) {
         Optional<UserRep> user = usersService.findById(id);
-        if(!user.isEmpty()) {
+        if (!user.isEmpty()) {
             return ResponseEntity.ok(user.get());
         } else {
             throw new UserNotFoundException(id);
@@ -51,7 +51,7 @@ public class UsersController {
     @PutMapping("{id}")
     public ResponseEntity<UserRep> updateUser(@PathVariable("id") String id, @RequestBody UserDto newInfo) {
         Optional<UserRep> user = usersService.findById(id);
-        if(!user.isEmpty()) {
+        if (!user.isEmpty()) {
             UserRep oldUser = user.get();
             oldUser.update(newInfo);
             UserRep newUser = usersService.save(oldUser);
@@ -64,7 +64,7 @@ public class UsersController {
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") String id) {
         Optional<UserRep> user = usersService.findById(id);
-        if(!user.isEmpty()) {
+        if (!user.isEmpty()) {
             usersService.deleteById(id);
             return ResponseEntity.ok().build();
         } else {
