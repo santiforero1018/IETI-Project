@@ -9,24 +9,27 @@ const LoginForm = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    
+
     if (!username || !password) {
       setError('Por favor, introduce un nombre de usuario y una contraseña');
       return;
     }
-    
+
     try {
-      const response = await fetch('http://localhost:8080/v1/users', {
-        method: 'GET',
+      const response = await fetch('http://localhost:8080/v1/auth', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ email: username, password })
       });
-      
-      if (response.ok) {
-        console.log('Usuario autenticado');
 
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('accessToken', data.token); // Guarda el token en el almacenamiento local
+        console.log("token: "+data.token);
+        console.log('Usuario autenticado');
+        // Aquí puedes redirigir al usuario a la página principal u otra página relevante
       } else {
         setError('Credenciales incorrectas');
       }
@@ -35,6 +38,7 @@ const LoginForm = () => {
       setError('Hubo un problema al iniciar sesión');
     }
   };
+
 
   return (
     <div>

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.eci.IETI.app.exception.InvalidCredentialException;
+import edu.eci.IETI.app.exception.UserNotFoundException;
 import edu.eci.IETI.app.repository.data.user.UserRep;
 import edu.eci.IETI.app.security.JwtUtil;
 import edu.eci.IETI.app.service.user.UsersService;
@@ -27,13 +28,14 @@ public class AuthController {
     }
 
     @PostMapping
-    public ResponseEntity<TokenDto> login(@RequestBody LoginDto loginDto) throws InvalidCredentialException {
+    public ResponseEntity<TokenDto> login(@RequestBody LoginDto loginDto) throws UserNotFoundException {
         UserRep user = usersService.findByEmail(loginDto.getEmail())
-                .orElseThrow(() -> new InvalidCredentialException());
+                .orElseThrow(() -> new UserNotFoundException(loginDto.getEmail()));
         if (BCrypt.checkpw(loginDto.getPassword(), user.getPassword())) {
             return ResponseEntity.ok(jwtUtil.generateToken(user.getEmail(), user.getRoles()));
         } else {
             throw new InvalidCredentialException();
         }
+
     }
 }
