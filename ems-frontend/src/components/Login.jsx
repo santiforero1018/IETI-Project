@@ -29,7 +29,7 @@ const LoginForm = () => {
         localStorage.setItem('accessToken', data.token); // Guarda el token en el almacenamiento local
         console.log("token: "+data.token);
         console.log('Usuario autenticado');
-        // Aquí puedes redirigir al usuario a la página principal u otra página relevante
+
       } else {
         setError('Credenciales incorrectas');
       }

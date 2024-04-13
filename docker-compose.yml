@@ -5,20 +5,20 @@ services:
 
   app:
     build:
-      context: .
+      context: ./project
       dockerfile: App.Dockerfile
     ports:
       - "8080:8080"
     environment:
       - secret=VG5aT1MyZ1FPdGJxY2c2NWFQeWp0dmNzOHdUdUduREw=
-    depends_on:
-      - db
 
-  db:
-    image: mysql:5.7
+  front:
+    build:
+      context: ./ems-frontend
+      dockerfile: Front.Dockerfile
     ports:
-      - "3306:3306"
-    environment:
-      - MYSQL_ROOT_PASSWORD=1234
-      - MYSQL_DATABASE=IETI-Project
+      - "3000:3000"
+    depends_on:
+      - app
+
 
