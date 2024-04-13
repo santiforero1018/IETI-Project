@@ -25,6 +25,7 @@ public class UsersController {
         this.usersService = usersService;
     }
 
+    // @RolesAllowed("ADMIN")
     @PostMapping
     public ResponseEntity<UserRep> createUser(@RequestBody UserDto userInfo) {
         URI createdUserUri = URI.create("");
@@ -40,17 +41,20 @@ public class UsersController {
         return ResponseEntity.ok(data);
     }
 
-    @GetMapping("/{username}")
-    public ResponseEntity<UserRep> getUser(@PathVariable("username") String username) {
-        UserRep user = usersService.findByUserName(username).orElseThrow(() -> new UserNotFoundException(username));
-        return ResponseEntity.ok(user);
+    @GetMapping("{id}")
+    public ResponseEntity<UserRep> findById(@PathVariable("id") String id) {
+        Optional<UserRep> user = usersService.findById(id);
+        if (!user.isEmpty()) {
+            return ResponseEntity.ok(user.get());
+        } else {
+            throw new UserNotFoundException(id);
+        }
     }
 
-    @RolesAllowed(ADMIN_ROLE)
-    @PutMapping("/{username}")
-    public ResponseEntity<UserRep> updateUser(@PathVariable("username") String username, @RequestBody UserDto newInfo) {
-        Optional<UserRep> user = usersService.findByUserName(username);
-        if(!user.isEmpty()) {
+    @PutMapping("{id}")
+    public ResponseEntity<UserRep> updateUser(@PathVariable("id") String id, @RequestBody UserDto newInfo) {
+        Optional<UserRep> user = usersService.findById(id);
+        if (!user.isEmpty()) {
             UserRep oldUser = user.get();
             oldUser.update(newInfo);
             UserRep newUser = usersService.save(oldUser);
@@ -60,12 +64,11 @@ public class UsersController {
         }
     }
 
-    @RolesAllowed(ADMIN_ROLE)
-    @DeleteMapping("/{username}")
-    public ResponseEntity<Void> deleteUser(@PathVariable("username") String username) {
-        Optional<UserRep> user = usersService.findByEmail(username);
-        if(!user.isEmpty()) {
-            usersService.deleteByUsername(username);
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable("id") String id) {
+        Optional<UserRep> user = usersService.findById(id);
+        if (!user.isEmpty()) {
+            usersService.deleteById(id);
             return ResponseEntity.ok().build();
         } else {
             throw new UserNotFoundException(username);
