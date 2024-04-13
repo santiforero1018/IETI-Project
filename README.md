@@ -1,5 +1,8 @@
 # IETI-Project
 
+## VIDEO 
+ https://youtu.be/ctN9euXcCTA
+
 1.
 Se tendran los servicios tales como el monitoreo de la luz, agua y gas lo cual permitira tener un mejor control de los gastos que se estan generando, retribuyendo asi a una mejora continua tanto para el medio ambiente como para la economía de nuestros usuarios.
 
