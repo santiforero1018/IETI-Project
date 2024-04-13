@@ -17,7 +17,7 @@ const LoginForm = () => {
     
     try {
       const response = await fetch('http://localhost:8080/v1/users', {
-        method: 'POST',
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json'
         },

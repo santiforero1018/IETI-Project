@@ -36,8 +36,8 @@ public class UsersServiceMap implements UsersService{
     }
 
     @Override
-    public void deleteByUsername(String username) {
-        this.userRepository.deleteByUsername(username);
+    public void deleteById(Long id) {
+        this.userRepository.deleteById(id);
     }
 
     @Override

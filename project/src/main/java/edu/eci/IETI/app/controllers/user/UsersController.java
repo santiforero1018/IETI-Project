@@ -63,9 +63,9 @@ public class UsersController {
     @RolesAllowed(ADMIN_ROLE)
     @DeleteMapping("/{username}")
     public ResponseEntity<Void> deleteUser(@PathVariable("username") String username) {
-        Optional<UserRep> user = usersService.findByEmail(username);
+        Optional<UserRep> user = usersService.findByUserName(username);
         if (!user.isEmpty()) {
-            usersService.deleteByUsername(username);
+            usersService.deleteById(user.get().getId());
             return ResponseEntity.ok().build();
         } else {
             throw new UserNotFoundException(username);

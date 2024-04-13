@@ -14,7 +14,7 @@ public interface UsersService {
 
     List<UserRep> all();
 
-    void deleteByUsername(String username);
+    void deleteById(Long id);
 
     UserRep update(UserRep user);
 }
