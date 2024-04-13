@@ -17,9 +17,9 @@ Puedes ver una demostración de nuestro proyecto en el siguiente enlace:
 ## Mockups
 
 Aquí presentamos algunos mockups de nuestro proyecto:
-
-![Mockup 1](https://github.com/santiforero1018/IETI-Project/blob/main/assets/89321404/b5d48977-158e-495d-a5e2-fd5a6f1de5e0.png)
-
-![Mockup 2](https://github.com/santiforero1018/IETI-Project/blob/main/assets/89321404/542b3927-121d-4bf3-812e-f2d701d560cb.png)
-
-![Mockup 3](https://github.com/santiforero1018/IETI-Project/blob/main/assets/89321404/8e32cc95-7172-4be6-ab79-17b7e3078999.png)
+>
+> ![image](https://github.com/santiforero1018/IETI-Project/assets/89321404/b5d48977-158e-495d-a5e2-fd5a6f1de5e0)
+>
+>![image](https://github.com/santiforero1018/IETI-Project/assets/89321404/542b3927-121d-4bf3-812e-f2d701d560cb)
+>
+>![image](https://github.com/santiforero1018/IETI-Project/assets/89321404/8e32cc95-7172-4be6-ab79-17b7e3078999)
