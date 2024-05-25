@@ -1,8 +1,6 @@
 version: '3.8'
 
 services:
-
-
   app:
     build:
       context: .
@@ -21,4 +19,3 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=1234
       - MYSQL_DATABASE=IETI-Project
-
