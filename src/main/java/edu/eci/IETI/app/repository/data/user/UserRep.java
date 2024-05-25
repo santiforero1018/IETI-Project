@@ -42,7 +42,7 @@ public class UserRep {
         this.email = userDto.getEmail();
         this.createdAt = new Date();
         this.password = new BCryptPasswordEncoder().encode(userDto.getPassword());
-        this.roles = userDto.getRoles();
+        this.roles.add(UserRoles.USER);
     }
 
     public void update(UserDto userDto) {

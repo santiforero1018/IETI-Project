@@ -3,6 +3,7 @@ package edu.eci.IETI.app.controllers.user;
 import edu.eci.IETI.app.exception.UserNotFoundException;
 import edu.eci.IETI.app.repository.data.user.UserRep;
 import edu.eci.IETI.app.repository.data.user.UserDto;
+import edu.eci.IETI.app.repository.data.user.UserRoles;
 import edu.eci.IETI.app.service.user.UsersService;
 import jakarta.annotation.security.RolesAllowed;
 
@@ -27,10 +28,10 @@ public class UsersController {
 
     @PostMapping
     public ResponseEntity<UserRep> createUser(@RequestBody UserDto userInfo) {
-        URI createdUserUri = URI.create("");
         UserRep user = new UserRep(userInfo);
+        if(usersService.all().isEmpty()) user.addRole(UserRoles.ADMIN);
         usersService.save(user);
-        return ResponseEntity.created(createdUserUri).body(user);
+        return ResponseEntity.ok(user);
     }
 
     @RolesAllowed(ADMIN_ROLE)

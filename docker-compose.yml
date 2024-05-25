@@ -9,6 +9,9 @@ services:
       - "8080:8080"
     environment:
       - secret=VG5aT1MyZ1FPdGJxY2c2NWFQeWp0dmNzOHdUdUduREw=
+      - user=root
+      - password=1234
+      - database=IETI-Project
     depends_on:
       - db
 

@@ -23,3 +23,35 @@ Aquí presentamos algunos mockups de nuestro proyecto:
 >![image](https://github.com/santiforero1018/IETI-Project/assets/89321404/542b3927-121d-4bf3-812e-f2d701d560cb)
 >
 >![image](https://github.com/santiforero1018/IETI-Project/assets/89321404/8e32cc95-7172-4be6-ab79-17b7e3078999)
+
+## Despliegue local 
+
+usando Docker, desplegamos de la siguiente manera, despues de clonar el repo
+
+````bash
+cd IETI-Project
+````
+
+despues de estar dentro de la carpeta del repositorio, ejecutamos los siguientes comandos que permitiran levantar
+la aplicacion, primeramente, realizando la compilación del codigo.
+
+````bash
+mvn clean install
+````
+
+````bash
+docker-compose build --no-cache
+docker-compose up -d
+````
+
+## Apuntes
+
+al realizar cambios en el codigo, toca borrar los contenedores compuestos y su información relacionada como los volumenes.
+Para ello, se usa el siguiente comando:
+
+````bash
+docker-compose down --volumes --remove-orphans
+````
+y despues ejecutar los comandos anteriores para volver a desplegar en docker.
+
+
